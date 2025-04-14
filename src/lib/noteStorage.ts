@@ -4,38 +4,7 @@ import { Note } from "./types";
 const STORAGE_KEY = "notes";
 
 // Default notes for first-time users
-const DEFAULT_NOTES: Note[] = [
-  {
-    id: "1",
-    title: "Welcome to NoteBuddy!",
-    content: "This is your new note-taking app. Tap the + button to create a new note.",
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    color: "purple",
-    tags: ["welcome"],
-    isPinned: true
-  },
-  {
-    id: "2",
-    title: "Shopping List",
-    content: "- Milk\n- Eggs\n- Bread\n- Apples\n- Coffee",
-    createdAt: new Date(Date.now() - 86400000).toISOString(),
-    updatedAt: new Date(Date.now() - 86400000).toISOString(),
-    color: "green",
-    tags: ["shopping"],
-    isPinned: false
-  },
-  {
-    id: "3",
-    title: "Meeting Notes",
-    content: "- Discuss project timeline\n- Review budget\n- Assign tasks to team members\n- Set next meeting date",
-    createdAt: new Date(Date.now() - 172800000).toISOString(),
-    updatedAt: new Date(Date.now() - 172800000).toISOString(),
-    color: "yellow",
-    tags: ["work", "meetings"],
-    isPinned: false
-  }
-];
+const DEFAULT_NOTES: Note[] = [];
 
 // Get all notes from storage
 export const getNotes = (): Note[] => {
