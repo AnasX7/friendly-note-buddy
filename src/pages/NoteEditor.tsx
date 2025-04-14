@@ -6,6 +6,7 @@ import { getNote, saveNote, deleteNote } from "@/lib/noteStorage";
 import { Note, NoteColor } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import RichTextEditor from "@/components/RichTextEditor";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -178,11 +179,9 @@ const NoteEditor = () => {
           className="w-full font-semibold text-xl mb-4 p-2 bg-transparent border-none focus:outline-none focus:ring-0"
         />
         
-        <textarea
-          placeholder="Write your note here..."
-          value={note.content}
-          onChange={(e) => setNote({ ...note, content: e.target.value })}
-          className="w-full min-h-[calc(100vh-220px)] p-2 bg-transparent border-none focus:outline-none focus:ring-0 resize-none"
+        <RichTextEditor 
+          content={note.content}
+          onChange={(content) => setNote({ ...note, content })}
         />
         
         <div className="mt-4">
