@@ -34,10 +34,18 @@ const NoteCard = ({ note, onPin }: NoteCardProps) => {
     return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
   };
 
-  // Truncate content to prevent overly tall cards
-  const truncateContent = (content: string, maxLength: number = 100) => {
-    if (content.length <= maxLength) return content;
-    return content.substring(0, maxLength) + '...';
+  // Strip HTML tags and truncate content for preview
+  const stripHtmlAndTruncate = (html: string, maxLength: number = 100) => {
+    // Create a temporary div to render the HTML
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    
+    // Get the text content without HTML tags
+    const textContent = tempDiv.textContent || tempDiv.innerText || '';
+    
+    // Truncate if needed
+    if (textContent.length <= maxLength) return textContent;
+    return textContent.substring(0, maxLength) + '...';
   };
 
   return (
@@ -67,7 +75,7 @@ const NoteCard = ({ note, onPin }: NoteCardProps) => {
         </div>
         
         <p className="text-sm text-gray-600 whitespace-pre-line mb-3">
-          {truncateContent(note.content)}
+          {stripHtmlAndTruncate(note.content)}
         </p>
         
         <div className="flex justify-between items-center mt-auto">
