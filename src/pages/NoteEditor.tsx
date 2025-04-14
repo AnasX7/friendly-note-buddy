@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Check, Trash2, Palette } from "lucide-react";
@@ -184,7 +183,7 @@ const NoteEditor = () => {
           onChange={(content) => setNote({ ...note, content })}
         />
         
-        <div className="mt-4">
+        <div className="mt-16">
           <div className="flex flex-wrap gap-2 mb-3">
             {note.tags.map(tag => (
               <div 

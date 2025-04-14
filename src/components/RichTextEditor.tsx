@@ -1,16 +1,8 @@
 
-import React, { useCallback } from "react";
-import { 
-  Bold, 
-  Italic, 
-  Underline, 
-  List, 
-  ListOrdered, 
-  AlignLeft,
-  AlignCenter,
-  AlignRight
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
+import React from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface RichTextEditorProps {
   content: string;
@@ -18,92 +10,35 @@ interface RichTextEditorProps {
 }
 
 const RichTextEditor: React.FC<RichTextEditorProps> = ({ content, onChange }) => {
-  
-  const execCommand = useCallback((command: string, value: string = "") => {
-    document.execCommand(command, false, value);
-  }, []);
-  
-  const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLDivElement;
-    onChange(target.innerHTML);
+  // Quill modules to attach to editor
+  const modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'align': [] }],
+      ['clean']
+    ],
   };
 
+  // Quill editor formats
+  const formats = [
+    'bold', 'italic', 'underline',
+    'list', 'bullet', 'align'
+  ];
+
   return (
-    <div className="w-full flex flex-col">
-      <div className="bg-background border rounded-t-md p-2 flex flex-wrap gap-1">
-        <Button 
-          type="button" 
-          variant="ghost" 
-          size="sm" 
-          onClick={() => execCommand('bold')}
-        >
-          <Bold size={16} />
-        </Button>
-        <Button 
-          type="button" 
-          variant="ghost" 
-          size="sm" 
-          onClick={() => execCommand('italic')}
-        >
-          <Italic size={16} />
-        </Button>
-        <Button 
-          type="button" 
-          variant="ghost" 
-          size="sm" 
-          onClick={() => execCommand('underline')}
-        >
-          <Underline size={16} />
-        </Button>
-        <Button 
-          type="button" 
-          variant="ghost" 
-          size="sm" 
-          onClick={() => execCommand('insertUnorderedList')}
-        >
-          <List size={16} />
-        </Button>
-        <Button 
-          type="button" 
-          variant="ghost" 
-          size="sm" 
-          onClick={() => execCommand('insertOrderedList')}
-        >
-          <ListOrdered size={16} />
-        </Button>
-        <Button 
-          type="button" 
-          variant="ghost" 
-          size="sm" 
-          onClick={() => execCommand('justifyLeft')}
-        >
-          <AlignLeft size={16} />
-        </Button>
-        <Button 
-          type="button" 
-          variant="ghost" 
-          size="sm" 
-          onClick={() => execCommand('justifyCenter')}
-        >
-          <AlignCenter size={16} />
-        </Button>
-        <Button 
-          type="button" 
-          variant="ghost" 
-          size="sm" 
-          onClick={() => execCommand('justifyRight')}
-        >
-          <AlignRight size={16} />
-        </Button>
+    <ScrollArea className="w-full">
+      <div className="w-full">
+        <ReactQuill 
+          theme="snow"
+          value={content}
+          onChange={onChange}
+          modules={modules}
+          formats={formats}
+          className="w-full min-h-[calc(100vh-250px)]"
+        />
       </div>
-      
-      <div
-        contentEditable
-        className="w-full min-h-[calc(100vh-220px)] p-3 rounded-b-md border border-t-0 focus:outline-none focus:ring-0 overflow-auto"
-        dangerouslySetInnerHTML={{ __html: content }}
-        onInput={handleInput}
-      />
-    </div>
+    </ScrollArea>
   );
 };
 
